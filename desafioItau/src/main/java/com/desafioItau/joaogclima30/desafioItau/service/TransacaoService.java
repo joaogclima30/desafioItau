@@ -18,13 +18,15 @@ public class TransacaoService {
         transacoes.add(dto);
     }
 
-        public void limparTransacoes(TransacaoRequestDTO dto) {
-            transacoes.clear();
-        }
+    public void limparTransacoes() {
+        transacoes.clear();
+    }
 
     public DoubleSummaryStatistics getEstatisticas () {
         OffsetDateTime horarioAtual = OffsetDateTime.now();
-        return (DoubleSummaryStatistics) transacoes.stream().filter(t -> t.dataHora().isAfter(horarioAtual.minusSeconds(60)));
+        return (DoubleSummaryStatistics) transacoes.stream().filter(
+                t -> t.getDataHora().isAfter(horarioAtual.minusSeconds(60)))
+                .mapToDouble(TransacaoRequestDTO::getValor).summaryStatistics();
     }
 
 }

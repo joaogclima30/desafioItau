@@ -19,18 +19,17 @@ public class TransacaoController {
 
     @PostMapping
     public ResponseEntity<Object> receber(@Valid @RequestBody TransacaoRequestDTO dto){
-        if(dto.dataHora().isAfter(OffsetDateTime.now())){
+        if(dto.getDataHora().isAfter(OffsetDateTime.now()) || dto.getValor() <= 0){
             return ResponseEntity.unprocessableEntity().build();
         }
-        transacaoService.receberTransacao(new TransacaoRequestDTO(dto.valor(), dto.dataHora()));
+        transacaoService.receberTransacao(new TransacaoRequestDTO(dto.getValor(), dto.getDataHora()));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping
-    public ResponseEntity<Object> deletar(@Valid @RequestBody TransacaoRequestDTO dto){
-        transacaoService.limparTransacoes(dto);
+    public ResponseEntity<Object> deletar(){
+        transacaoService.limparTransacoes();
         return ResponseEntity.ok().build();
     }
-
 }
 
