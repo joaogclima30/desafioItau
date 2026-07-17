@@ -1,13 +1,14 @@
 package com.desafioItau.joaogclima30.desafioItau.controller;
 
-import com.desafioItau.joaogclima30.desafioItau.dto.TransacaoDTO;
+import com.desafioItau.joaogclima30.desafioItau.dto.TransacaoRequestDTO;
 import com.desafioItau.joaogclima30.desafioItau.service.TransacaoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.OffsetDateTime;
 
 @RestController
 @RequestMapping("/transacao")
@@ -16,15 +17,20 @@ public class TransacaoController {
     @Autowired
     TransacaoService transacaoService;
 
-    @Autowired
-    TransacaoDTO transacaoDTO;
-
     @PostMapping
-    public ResponseEntity<Object> receberTransacoes(@RequestBody TransacaoDTO transacaoDTO){
-        transacaoService.receberTransacao();
-        return ResponseEntity.created().build();
+    public ResponseEntity<Object> receber(@Valid @RequestBody TransacaoRequestDTO dto){
+        if(dto.dataHora().isAfter(OffsetDateTime.now())){
+            return ResponseEntity.unprocessableEntity().build();
+        }
+        transacaoService.receberTransacao(new TransacaoRequestDTO(dto.valor(), dto.dataHora()));
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @DeleteMapping
+    public ResponseEntity<Object> deletar(@Valid @RequestBody TransacaoRequestDTO dto){
+        transacaoService.limparTransacoes(dto);
+        return ResponseEntity.ok().build();
+    }
 
 }
 
