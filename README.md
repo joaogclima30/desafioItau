@@ -3,8 +3,6 @@
 ![Java](https://img.shields.io/badge/Java-21-orange?logo=openjdk&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.1-brightgreen?logo=springboot&logoColor=white)
 ![Maven](https://img.shields.io/badge/Maven-build-blue?logo=apachemaven&logoColor=white)
-![Tests](https://img.shields.io/badge/tests-passing-success)
-![License](https://img.shields.io/badge/license-MIT-lightgrey)
 
 API REST desenvolvida em **Java 21 + Spring Boot** para o desafio de backend
 do Itaú. A aplicação recebe transações financeiras e calcula estatísticas
