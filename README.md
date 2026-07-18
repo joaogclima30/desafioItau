@@ -73,10 +73,6 @@ de 60 segundos.
 
 > Se não houver transações em 60 segundos, **todos** os campos retornam `0`.
 
-```bash
-curl -i http://localhost:8080/estatistica
-```
-
 ---
 
 ## ✅ Regras de negócio
