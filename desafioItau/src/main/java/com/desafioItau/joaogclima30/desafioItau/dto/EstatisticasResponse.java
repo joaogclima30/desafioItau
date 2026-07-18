@@ -17,8 +17,8 @@ public class EstatisticasResponse {
         this.count = stats.getCount();
         this.sum = stats.getSum();
         this.avg = stats.getAverage();
-        this.min = stats.getMin();
-        this.max = stats.getMax();
+        this.min = (this.count == 0) ? 0.0 : stats.getMin();
+        this.max = (this.count == 0) ? 0.0 : stats.getMax();
     }
 
     public Long getCount() {

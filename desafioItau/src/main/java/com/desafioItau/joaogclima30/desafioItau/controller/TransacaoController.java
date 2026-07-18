@@ -1,6 +1,7 @@
 package com.desafioItau.joaogclima30.desafioItau.controller;
 
 import com.desafioItau.joaogclima30.desafioItau.dto.TransacaoRequestDTO;
+import com.desafioItau.joaogclima30.desafioItau.model.TransacaoModel;
 import com.desafioItau.joaogclima30.desafioItau.service.TransacaoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,7 @@ public class TransacaoController {
 
     @PostMapping
     public ResponseEntity<Object> receber(@Valid @RequestBody TransacaoRequestDTO dto){
-        if(dto.getDataHora().isAfter(OffsetDateTime.now()) || dto.getValor() <= 0){
-            return ResponseEntity.unprocessableEntity().build();
-        }
-        transacaoService.receberTransacao(new TransacaoRequestDTO(dto.getValor(), dto.getDataHora()));
+        transacaoService.receberTransacao(dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
